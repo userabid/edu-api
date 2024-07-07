@@ -30,6 +30,7 @@ Cypress.Commands.add('loginViaAPI', (
     cy.request({
         method: 'POST',
         url: `${Cypress.env('apiUrl')}/users/login`,
+        failonStatusCode: false,
         body: {
             email: email,
             password: password
