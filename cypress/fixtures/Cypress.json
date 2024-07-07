@@ -1,0 +1,7 @@
+{
+  "env": {
+    "userEmail": "admin",
+    "userPassword": "admin",
+    "apiUrl": "https://the-internet.herokuapp.com/"
+  }
+}
