@@ -22,45 +22,9 @@
 //
 //
 // -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-Cypress.Commands.add('loginViaAPI', (
-    email = Cypress.env('userEmail'),
-    password = Cypress.env('userPassword')
-) => {
-    cy.request({
-        method: 'POST',
-        url: `${Cypress.env('apiUrl')}/users/login`,
-        failonStatusCode: false,
-        body: {
-            email: email,
-            password: password
-        }
-    }).then((response) => {
-        // Pastikan response memiliki struktur yang diharapkan
-        expect(response.status).to.eq(200);
-        expect(response.body).to.have.property('sessionId');
-        expect(response.body).to.have.property('userId');
-        expect(response.body).to.have.property('userName');
-        expect(response.body).to.have.property('email');
-        expect(response.body).to.have.property('token');
-
-        // Set cookies
-        cy.setCookie('sessionId', response.body.sessionId);
-        cy.setCookie('userId', response.body.userId);
-        cy.setCookie('userName', response.body.userName);
-        cy.setCookie('email', response.body.email);
-
-
-        // Kunjungi halaman utama
-        cy.visit('/#!/main');
-    });
-});
-
-
-
 Cypress.Commands.add('loginAPI', (username, password) => {
     cy.request({
-        method: 'POST',
+        method: 'GET',
         url: 'https://the-internet.herokuapp.com/basic_auth',
         div: {
             username: 'admin',
@@ -69,3 +33,33 @@ Cypress.Commands.add('loginAPI', (username, password) => {
     }).its('status').should('eq', 200); // Add assertion to check the response status
 });
 
+
+Cypress.Commands.add('loginnyaAPI', () => {
+    cy.fixture("cypress").then(cypress => {
+        const token = cypress.env.authToken
+
+        console.log(' Auth Token:', token);
+        cy.log('Auth Token:', token);
+
+        cy.request({
+            method:"GET",
+            url: "/basic_auth",
+            failonStatusCode: false,
+            headers: {
+                'Authorization': token
+            }
+    }).then((response) => {
+
+        const token = cy.fixture.cypress;
+        console.log('Auth Token:', token);
+
+        console.log('response:', response);
+        cy.log(JSON.stringify(response));
+        expect(response.status).to.eq(200);
+    })
+
+
+        // Kunjungi halaman utama
+        cy.visit('/#!/main');
+    })
+})

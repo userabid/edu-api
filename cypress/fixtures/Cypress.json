@@ -2,6 +2,7 @@
   "env": {
     "userEmail": "admin",
     "userPassword": "admin",
-    "apiUrl": "https://the-internet.herokuapp.com/"
+    "apiUrl": "https://the-internet.herokuapp.com/",
+    "authToken": "Basic YWRtaW46YWRtaW4="
   }
 }

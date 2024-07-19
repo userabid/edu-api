@@ -1,6 +1,6 @@
 describe('Tugas API Tests', () => {
     it('should login via API', () => {
-        cy.loginViaAPI()
+        cy.loginnyaAPI()
     });
 
     // ... existing code ...
